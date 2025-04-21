@@ -3,13 +3,13 @@
 
 ![](./pictures/lab_diagram.drawio.png)
 
-A project related to our third year IT diploma network design and administration studies at CTU Training Solutions. The module is Computer Systems 731, formative assessment 2.In this project project we have implemented agentless configuration management of Linux Virtual Machines on Microsoft Hyper-V through Ansible. 
+A project related to our third year **[IT diploma network design and administration](https://allqs.saqa.org.za/showQualification.php?id=91927)** studies at **[CTU Training Solutions](https://ctutraining.ac.za/)**. The module is Computer Systems 731, formative assessment 2.In this project project we have implemented agentless configuration management of Linux Virtual Machines on Microsoft Hyper-V through Ansible. 
 
 
 ## Table of Contents
 
 <ul>
- <li><a href="#project-requirements"></a>Project requirements</li>
+ <li><a href="#project-requirements">Project Requirements</a></li>
  <li><a href="#setup">Setup</a></li>
  <li><a href="#run-the-paybooks">Running the Ansible Playbooks</a></li>
  <li><a href="#final-wordpress-steps">Final Wordpress Steps</a></li>
@@ -51,8 +51,9 @@ Navigate: Control Panel\Network and Internet\Network and Sharing Centre
 ## 4. On the management VM
 1. Add DNS Server to resolv config
 
+Open the resolv configuration file with the nano text editor
 > sudo nano /etc/resolv.conf
-
+Type the following into the text editor: 
 > nameserver 1.1.1.1
 
 2. Install ansible, sshpass, and ansible collections
@@ -69,21 +70,27 @@ Install ansible collection collections
 ### Get the repository on to the Management VM
 Option 1: Clone the repository when it is public
 > git clone https://github.com/willie-de-klerk/cos731_fa2_project
-> cd into the project folder
+
+> cd into cos731_fa2_project
 
 Option 2: Secure Copy Protocol
 Download the repository on the windows PC to your Downloads directory, unzip and open powershell.
 
 cd into your download directory. 
 > cd Downloads
+
 SCP Command
 > scp -r cos731_fa2_project ansible@172.16.101.10:/home/ansible/
 
 ## Vault Setup
 If you are following along for demonstration purposes, you copy the sample vault values into your actual vault. 
+initialize the vault file
 > ansible-vault init vault.yml
+decrypt the vault file
 > ansible-vault decrypt vault.yml
+add the example vault file
 > cat sample_vault.yml > vault.yml
+encrypt the vault file
 > ansible-vault encrypt vault.yml
 
 ## Run the Paybooks
