@@ -1,0 +1,10 @@
+---
+- name: Deploying SQL Server Configuration
+  hosts: sql
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - '~/cos731_fa2_project/vault.yml'  
+  roles:
+    - role: './roles/debiancommon'
+    - role: './roles/sql'

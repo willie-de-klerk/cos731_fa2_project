@@ -1,0 +1,14 @@
+---
+# Wordpress Install Requirements according to  https://wiki.debian.org/WordPress
+- name: Install curl, wordpress and apache2
+  ansible.builtin.apt:
+    pkg:
+      - wordpress
+      - curl
+      - apache2
+      - ufw
+
+- name: Remove dependencies that are no longer required and purge their configuration files
+  ansible.builtin.apt:
+    autoremove: yes
+    purge: true

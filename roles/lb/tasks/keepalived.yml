@@ -1,0 +1,13 @@
+---
+- name: free range routing config file
+  copy:
+    src: '{{inventory_hostname}}.conf'
+    dest: /etc/keepalived/keepalived.conf
+
+- name: stopping keepalived 
+  ansible.builtin.shell:
+    cmd: 'sudo systemctl stop keepalived.service'
+
+- name: starting keepalived
+  ansible.builtin.shell:
+    cmd: 'sudo systemctl start keepalived.service'

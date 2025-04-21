@@ -1,0 +1,20 @@
+---
+  - name: Load NTP Config
+    ansible.builtin.template:
+      src: ntp.j2
+      dest: /etc/ntp.conf
+  - name: Reload system configs
+    ansible.builtin.systemd:
+      daemon_reload: yes
+  - name: Stop NTP Service
+    ansible.builtin.systemd:
+      name: ntp
+      state: stopped
+  - name: Start NTP Service
+    ansible.builtin.systemd:
+      name: ntp
+      state: started
+  - name: Enable NTP Service
+    ansible.builtin.systemd:
+      name: ntp
+      enabled: yes

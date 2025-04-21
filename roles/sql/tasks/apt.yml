@@ -1,0 +1,7 @@
+---
+- name: Installing relevant apt packages for backend sql server
+  ansible.builtin.apt:
+    pkg:
+      - mariadb-server
+      - python3-pymysql
+      - ufw

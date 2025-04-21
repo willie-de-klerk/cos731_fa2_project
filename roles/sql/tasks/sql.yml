@@ -1,0 +1,38 @@
+---
+  - name: Copy config file for mysql (states port and bind address info)
+    ansible.builtin.template:
+      src: my_cnf.j2
+      dest: '/etc/mysql/my.cnf'
+      
+  - name: stopping mysqld 
+    ansible.builtin.shell:
+      cmd: 'sudo systemctl stop mysqld'
+
+  - name: starting mysqld
+    ansible.builtin.shell:
+      cmd: 'sudo systemctl start mysqld'
+  - name: Update mysql root password
+    ansible.builtin.shell:
+      cmd: 'sudo /usr/bin/mysqladmin -u root password {{ mysql_root_pass }}'
+
+  - name: Create mysql database '{{ wp_db_name }}' on main sql server
+    community.mysql.mysql_db:
+      login_user: root
+      login_password: '{{ mysql_root_pass }}'
+      name: '{{ wp_db_name }}'
+      state: present
+    when: ('{{ inventory_hostname }}' == '{{ mysql_master_ip }}')
+
+  - name: Create the wordpress user '{{ wp_db_user }}' on main sql server
+    community.mysql.mysql_user:
+      login_user: root
+      login_password: '{{ mysql_root_pass }}'    
+      name: '{{ wp_db_user }}'
+      password: '{{ wp_db_user_pass }}' 
+      host: "%" #Only front-end range should be able to connect
+      encrypted: false
+      priv: 
+        "{{ wp_db_name }}.*: SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER"
+      state: present
+    when: ('{{ inventory_hostname }}' == '{{ mysql_master_ip }}')
+

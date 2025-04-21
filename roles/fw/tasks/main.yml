@@ -1,0 +1,14 @@
+---
+# tasks file for wf
+
+- name: Add all packages for Frontend Web Servers
+  import_tasks: apt.yml
+
+- name: setup Apache
+  import_tasks: apache.yml
+
+- name: Firewall Setup
+  import_tasks: ufw.yml
+
+- name: reboot
+  import_tasks: reboot.yml

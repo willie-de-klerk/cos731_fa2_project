@@ -1,0 +1,4 @@
+---
+- name: Configure dns
+  ansible.builtin.shell:
+     cmd: sudo echo nameserver {{ dns_servers[0] }} {{ dns_servers[1] }} {{ dns_servers[2] }} {{ dns_servers[3] }} > /etc/resolv.conf

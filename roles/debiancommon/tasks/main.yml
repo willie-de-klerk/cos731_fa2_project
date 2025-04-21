@@ -1,0 +1,9 @@
+---
+# tasks file for debiancommon
+
+- name: Common DNS 
+  import_tasks: dns.yml
+- name: Common APT
+  import_tasks: apt.yml
+- name: NTP
+  import_tasks: ntp.yml

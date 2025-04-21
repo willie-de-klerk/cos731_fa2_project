@@ -1,0 +1,7 @@
+CREATE USER {{wp_db_user}}@localhost IDENTIFIED BY '{{wp_db_user_pass}}';
+CREATE DATABASE {{wp_db_name}};
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER
+ON {{wp_db_name}}.*
+TO {{wp_db_user}}@localhost
+IDENTIFIED BY '{{wp_db_user_pass}}';
+FLUSH PRIVILEGES;

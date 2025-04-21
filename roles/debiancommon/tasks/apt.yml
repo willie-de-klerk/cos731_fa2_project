@@ -1,0 +1,10 @@
+---
+- name: Run sudo apt update
+  ansible.builtin.apt:
+    update_cache: yes
+
+
+- name: Install commonly used packages
+  ansible.builtin.apt:
+    pkg:
+      - ntp

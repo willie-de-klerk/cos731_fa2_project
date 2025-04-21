@@ -1,0 +1,37 @@
+---
+- name: Copy basic index to servers Apache (000-default on port 80)
+  ansible.builtin.template:
+    src: '000-default.j2'
+    dest: /var/www/html/index.html
+
+- name: Copy wordpress apache site to servers Apache Config (wp on port 8080)
+  ansible.builtin.template:
+    src: 'wp.j2'
+    dest: '/etc/apache2/sites-available/wp.conf'
+
+- name: Enable The Wordpress Site
+  ansible.builtin.shell:
+    cmd: 'a2ensite wp'
+
+- name: Enable The Default Site
+  ansible.builtin.shell:
+    cmd: 'a2dissite 000-default'
+
+- name: Reload the Apache WebServer
+  ansible.builtin.shell:
+    cmd: 'sudo service apache2 reload'
+
+- name: Add itdip3projectdemo config.php file
+  ansible.builtin.template:
+    src:  'config-172.16.101.252.j2'
+    dest: '/etc/wordpress/config-172.16.101.252.php'
+
+- name: Add itdip3projectdemo config.php file
+  ansible.builtin.template:
+    src:  'config-172.16.101.252.j2'
+    dest: '/etc/wordpress/config-xyz.php'
+
+- name: Copy HTAccess File
+  ansible.builtin.copy:
+    src:  'htaccess'
+    dest: '/etc/wordpress/htaccess'

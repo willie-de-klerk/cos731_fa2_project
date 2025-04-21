@@ -1,0 +1,60 @@
+---
+# https://scalingo.com/blog/iptables
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/iptables_module.html
+
+- name: Iptables flush filter
+  ansible.builtin.iptables:
+    chain: "{{ item }}"
+    flush: yes
+  with_items:  [ 'INPUT', 'FORWARD', 'OUTPUT' ]
+
+- name: Iptables flush nat
+  ansible.builtin.iptables:
+    table: nat
+    chain: '{{ item }}'
+    flush: yes
+  with_items: [ 'INPUT', 'OUTPUT', 'PREROUTING', 'POSTROUTING' ]
+
+- name: iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+  ansible.builtin.iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: eth0
+    jump: MASQUERADE
+
+- name: SNAT Rule to 10.0.0.1
+  ansible.builtin.shell:
+    cmd: 'iptables -A POSTROUTING -t nat -p tcp -d 10.0.0.1 --dport 80 -j SNAT --to-source 10.0.0.252'
+
+- name: SNAT Rule to 10.0.0.2
+  ansible.builtin.shell:
+    cmd: 'iptables -A POSTROUTING -t nat -p tcp -d 10.0.0.2 --dport 80 -j SNAT --to-source 10.0.0.252'
+
+- name: SNAT Rule to 10.0.0.3
+  ansible.builtin.shell:
+    cmd: 'iptables -A POSTROUTING -t nat -p tcp -d 10.0.0.1 --dport 80 -j SNAT --to-source 10.0.0.252'
+
+- name: SNAT Rule to 10.0.0.3
+  ansible.builtin.shell:
+    cmd: 'iptables -A POSTROUTING -t nat -p tcp -d 10.0.0.1 --dport 80 -j SNAT --to-source 10.0.0.252'
+
+- name: DNAT WAN VRRP IP Traffic to Frontend Web Server 1
+  ansible.builtin.shell:
+    cmd: 'iptables -A PREROUTING -t nat -p tcp -d 172.16.101.252 --dport 80 -m statistic --mode random --probability 0.25 -j DNAT --to-destination 10.1.0.1:80'
+
+- name: DNAT WAN VRRP IP Traffic to Frontend Web Server 2
+  ansible.builtin.shell:
+    cmd: 'iptables -A PREROUTING -t nat -p tcp -d 172.16.101.252 --dport 80 -m statistic --mode random --probability 0.75 -j DNAT --to-destination 10.1.0.2:80'
+
+- name: DNAT WAN VRRP IP Traffic to Frontend Web Server 3
+  ansible.builtin.shell:
+    cmd: 'iptables -A PREROUTING -t nat -p tcp -d 172.16.101.252 --dport 80 -m statistic --mode random --probability 0.50 -j DNAT --to-destination 10.1.0.3:80'
+
+- name: DNAT WAN VRRP IP Traffic to Frontend Web Server 4
+  ansible.builtin.shell:
+    cmd: 'iptables -A PREROUTING -t nat -p tcp -d 172.16.101.252 --dport 80 -j DNAT --to-destination 10.1.0.4:80'
+
+- name: Save iptables
+  ansible.builtin.shell:
+    cmd: 'sudo iptables-save | sudo tee /etc/iptables/rules.v4'
+

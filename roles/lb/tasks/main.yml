@@ -1,0 +1,16 @@
+---
+# tasks file for lb
+
+- name: Configure APT packages
+  import_tasks: apt.yml
+
+- name: Configure the sysctl.conf file
+  import_tasks: sysctl.yml
+
+- name: Configure IPtables
+  import_tasks: iptables.yml
+
+- name: Keepalived
+  import_tasks: keepalived.yml
+
+

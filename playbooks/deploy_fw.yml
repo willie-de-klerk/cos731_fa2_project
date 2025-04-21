@@ -1,0 +1,11 @@
+---
+- name: Deploying configuration for frontend web servers
+  hosts: fw
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - '~/cos731_fa2_project/vault.yml'
+  roles:
+    - role: './roles/debiancommon'
+    - role: './roles/fw'
+  

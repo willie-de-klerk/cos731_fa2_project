@@ -1,0 +1,11 @@
+---
+# tasks file for sql
+
+- name: apt tasks
+  import_tasks: apt.yml
+
+- name: sql server tasks
+  import_tasks: sql.yml
+
+
+  
