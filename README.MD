@@ -93,14 +93,17 @@ If you are following along for demonstration purposes, you copy the sample vault
 initialize the vault file
 
 > ansible-vault create vault.yml
+
 decrypt the vault file
 
 > ansible-vault decrypt vault.yml
+
 add the example vault file
 
 > cat sample_vault.yml > vault.yml
 
 encrypt the vault file
+
 > ansible-vault encrypt vault.yml
 
 ## Run the Paybooks
