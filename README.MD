@@ -33,8 +33,14 @@ Download this repository and place the linux images within the *vm_setup* folder
 
 ## 2. Run the Powershell Scripts. 
 Run the scripts in the following order:
-1. ./create_network_interfaces.ps1
-2. ./create_vm.ps1
+
+> /create_network_interfaces.ps1
+
+> ./create_vm.ps1
+
+You may have to shut down and start the virtual machines again after creation. 
+
+If you are using the images from one drive, the username is ansible and the password is ansible1234!
 
 ## 3. Windows PC Interface settings
 
@@ -53,6 +59,7 @@ Navigate: Control Panel\Network and Internet\Network and Sharing Centre
 
 Open the resolv configuration file with the nano text editor
 > sudo nano /etc/resolv.conf
+
 Type the following into the text editor: 
 > nameserver 1.1.1.1
 
@@ -68,10 +75,11 @@ Install ansible collection collections
 > ansible-galaxy collection install ansible.posix community.mysql community.general
 
 ### Get the repository on to the Management VM
+
 Option 1: Clone the repository when it is public
 > git clone https://github.com/willie-de-klerk/cos731_fa2_project
 
-> cd into cos731_fa2_project
+> cd cos731_fa2_project
 
 Option 2: Secure Copy Protocol
 Download the repository on the windows PC to your Downloads directory, unzip and open powershell.
@@ -85,12 +93,19 @@ SCP Command
 ## Vault Setup
 If you are following along for demonstration purposes, you copy the sample vault values into your actual vault. 
 initialize the vault file
-> ansible-vault init vault.yml
+
+> ansible-vault create vault.yml
+
 decrypt the vault file
+
 > ansible-vault decrypt vault.yml
+
 add the example vault file
+
 > cat sample_vault.yml > vault.yml
+
 encrypt the vault file
+
 > ansible-vault encrypt vault.yml
 
 ## Run the Paybooks
