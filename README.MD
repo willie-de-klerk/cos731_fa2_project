@@ -77,7 +77,7 @@ Install ansible collection collections
 Option 1: Clone the repository when it is public
 > git clone https://github.com/willie-de-klerk/cos731_fa2_project
 
-> cd into cos731_fa2_project
+> cd cos731_fa2_project
 
 Option 2: Secure Copy Protocol
 Download the repository on the windows PC to your Downloads directory, unzip and open powershell.
