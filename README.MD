@@ -38,6 +38,8 @@ Run the scripts in the following order:
 
 > ./create_vm.ps1
 
+You may have to shut down and start the virtual machines again after creation. 
+
 If you are using the images from one drive, the username is ansible and the password is ansible1234!
 
 ## 3. Windows PC Interface settings
